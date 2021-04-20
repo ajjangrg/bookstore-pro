@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_mysqldb import MySQL
 from datetime import datetime
+from dataclasses import dataclass
 from helpers.database import DatabaseHelper
 
 app = Flask(__name__, static_url_path='',
