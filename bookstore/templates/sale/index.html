@@ -1,0 +1,56 @@
+{% extends "layout.html" %} {% block content %}
+<div>
+  <h1>{{title}}</h1>
+
+  <div class="form-group">
+    <a class="button" href="{{ url_for('createSale')}}">Add Sale</a>
+  </div>
+  {% if (sales[0] is defined) and sales[0] %}
+  <div style="overflow-x: auto">
+    <table id="publishers">
+      <tr>
+        <th>Book Name</th>
+        <th>Customer Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Date</th>
+        <th>Delete</th>
+      </tr>
+      {% for sale in sales %}
+      <tr>
+        <td>{{ sale[2] }}</td>
+        <td>{{ sale[3] }}</td>
+        <td>{{ sale[4] }}</td>
+        <td>{{ sale[5] }}</td>
+        <td>{{ sale[6] }}</td>
+        <td class="action-button">
+          <a
+            data-link="{{ url_for('deleteSale',customerNumber=sale[0],bookNumber=sale[1])}}"
+            id="delete-button"
+            ><img class="icon" src="./images/icons/delete.png" alt=""
+          /></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% else %}
+  <p class="not-found">No Sale found. Start by adding.</p>
+  {% endif %}
+  <div id="are-you-sure-modal" class="modal">
+    <div class="modal-body">
+      <div class="modal-header">
+        <p>Are you sure?</p>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-content">
+        <p>Do you really want to delete?</p>
+      </div>
+      <div class="modal-buttons">
+        <button class="button danger" id="cancel-button">Cancel</button>
+        <button class="button" id="accept-button">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

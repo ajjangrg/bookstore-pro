@@ -1,0 +1,74 @@
+{% extends "layout.html" %} {% block content %}
+<div>
+  <h1>{{title}}</h1>
+
+  <form action="{{ url_for('editBook',bookId=book[0])}}" method="POST">
+    <div class="form-group">
+      <label for="bookName">Book Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="bookName"
+        name="bookName"
+        value="{{ book[1] }}"
+        placeholder="Book Name"
+      />
+    </div>
+    {% if publishers %}
+    <div class="form-group">
+      <label for="publishers">Publisher</label>
+      <select name="publisher" id="publishers">
+        {% for publisher in publishers %}
+        <option
+          {% if publisher[0] == book[4] %}
+          selected="selected"
+          {% endif %}
+          value="{{ publisher[0] }}"
+        >
+          {{ publisher[0] }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
+    <div class="form-group">
+      <label for="publicationYear">Publication Year</label>
+      <input
+        type="number"
+        maxlength="4"
+        class="form-control"
+        name="publicationYear"
+        value="{{ book[2] }}"
+        id="publicationYear"
+        placeholder="Publication Year"
+      />
+    </div>
+    {% if authors %}
+    <div class="form-group">
+      <label for="customers">Authors</label>
+      <select name="author" id="authors">
+        {% for author in authors %}
+        <option {% if author[0] == book[5] %}selected="selected"{% endif %}value="{{ author[0] }}">
+          {{ author[1] }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
+    <div class="form-group">
+      <label for="pages">Pages</label>
+      <input
+        type="number"
+        class="form-control"
+        name="pages"
+        value="{{ book[3] }}"
+        id="pages"
+        placeholder="Pages"
+      />
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Update Book" />
+    </div>
+  </form>
+</div>
+{% endblock %}

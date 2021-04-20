@@ -1,0 +1,58 @@
+{% extends "layout.html" %} {% block content %}
+<div>
+  <h1>{{title}}</h1>
+
+  <div class="form-group">
+    <a class="button" href="{{ url_for('createAuthor')}}">Add Author</a>
+  </div>
+  {% if (authors is defined) and authors %}
+  <div style="overflow-x: auto">
+    <table style="overflow-x: auto" id="publishers">
+      <tr>
+        <th>Author Name</th>
+        <th>Year Born</th>
+        <th>Year Died</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for author in authors %}
+      <tr>
+        <td>{{ author[1] }}</td>
+        <td>{{ author[2] }}</td>
+        <td>{{ author[3] }}</td>
+        <td class="action-button">
+          <a href="{{ url_for('editAuthor',authorNumber=author[0])}}"
+            ><img class="icon" src="./images/icons/edit.png" alt=""
+          /></a>
+        </td>
+        <td class="action-button">
+          <a
+            id="deleteButton"
+            data-url="{{ url_for('deleteAuthor',authorNumber=author[0])}}"
+            ><img class="icon" src="./images/icons/delete.png" alt=""
+          /></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% else %}
+  <p class="not-found">No Authors found. Start by adding.</p>
+  {% endif %}
+  <div id="are-you-sure-modal" class="modal">
+    <div class="modal-body">
+      <div class="modal-header">
+        <p>Are you sure?</p>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-content">
+        <p>Do you really want to delete?</p>
+      </div>
+      <div class="modal-buttons">
+        <button class="button danger" id="cancel-button">Cancel</button>
+        <button class="button" id="accept-button">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

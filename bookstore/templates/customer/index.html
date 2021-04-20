@@ -1,0 +1,62 @@
+{% extends "layout.html" %} {% block content %}
+<div>
+  <h1>{{title}}</h1>
+
+  <div class="form-group">
+    <a class="button" href="{{ url_for('createCustomer')}}">Add Customer</a>
+  </div>
+  {% if (customers is defined) and customers %}
+  <div style="overflow-x: auto">
+    <table id="customers">
+      <tr>
+        <th>Customer Name</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for customer in customers %}
+      <tr>
+        <td>{{ customer[1] }}</td>
+        <td>{{ customer[2] }}</td>
+        <td>{{ customer[3] }}</td>
+        <td>{{ customer[4] }}</td>
+        <td>{{ customer[5] }}</td>
+        <td class="action-button">
+          <a href="{{ url_for('editCustomer',customerNumber=customer[0])}}"
+            ><img class="icon" src="./images/icons/edit.png" alt=""
+          /></a>
+        </td>
+        <td class="action-button">
+          <a
+            id="deleteButton"
+            data-url="{{ url_for('deleteCustomer',customerNumber=customer[0])}}"
+            ><img class="icon" src="./images/icons/delete.png" alt=""
+          /></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% else %}
+  <p class="not-found">No Customers found. Start by adding.</p>
+  {% endif %}
+  <div id="are-you-sure-modal" class="modal">
+    <div class="modal-body">
+      <div class="modal-header">
+        <p>Are you sure?</p>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-content">
+        <p>Do you really want to delete?</p>
+      </div>
+      <div class="modal-buttons">
+        <button class="button danger" id="cancel-button">Cancel</button>
+        <button class="button" id="accept-button">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

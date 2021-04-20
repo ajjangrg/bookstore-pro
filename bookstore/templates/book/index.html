@@ -1,0 +1,62 @@
+{% extends "layout.html" %} {% block content %}
+<div>
+  <h1>{{title}}</h1>
+  <div class="form-group">
+    <a class="button" href="{{ url_for('createBook')}}">Add Book</a>
+  </div>
+  {% if (books[0]) and books[0] %}
+  <div style="overflow-x: auto">
+    <table id="books">
+      <tr>
+        <th>Book Name</th>
+        <th>Published Year</th>
+        <th>Pages</th>
+        <th>Publication</th>
+        <th>Writer</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for book in books %}
+      <tr>
+        <td>{{ book[1] }}</td>
+        <td>{{ book[2] }}</td>
+        <td>{{ book[3] }}</td>
+        <td>{% if book[4] %}{{ book[4] }}{% else %}N/A{% endif %}</td>
+        <td>{% if book[5] %}{{ book[5] }}{% else %}N/A{% endif %}</td>
+        <td class="action-button">
+          <a href="{{ url_for('editBook',bookId=book[0])}}"
+            ><img class="icon" src="./images/icons/edit.png" alt=""
+          /></a>
+        </td>
+        <td class="action-button">
+          <a
+            id="deleteButton"
+            data-url="{{ url_for('deleteBook',bookId=book[0]) }}"
+            ><img class="icon" src="./images/icons/delete.png" alt=""
+          /></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  {% else %}
+  <p class="not-found">No books found. Start by adding.</p>
+  {% endif %}
+  <div id="are-you-sure-modal" class="modal">
+    <div class="modal-body">
+      <div class="modal-header">
+        <p>Are you sure?</p>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-content">
+        <p>Do you really want to delete?</p>
+      </div>
+      <div class="modal-buttons">
+        <button class="button danger" id="cancel-button">Cancel</button>
+        <button class="button" id="accept-button">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

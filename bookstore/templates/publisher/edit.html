@@ -1,0 +1,67 @@
+{% extends "layout.html" %} {% block content %}
+<div>
+  <h1>{{title}}</h1>
+
+  <form action="/publisher/edit/{{publisher[0]}}" method="POST">
+    <div class="form-group">
+      <label for="publisherName">Publisher Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="publisherName"
+        name="publisherName"
+        value="{{publisher[0]}}"
+        placeholder="Publisher Name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input
+        type="text"
+        class="form-control"
+        id="city"
+        name="city"
+        value="{{publisher[1]}}"
+        placeholder="City"
+      />
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input
+        type="text"
+        class="form-control"
+        id="country"
+        name="country"
+        value="{{publisher[2]}}"
+        placeholder="Country"
+      />
+    </div>
+    <div class="form-group">
+      <label for="president">President</label>
+      <input
+        type="text"
+        class="form-control"
+        id="president"
+        name="president"
+        value="{{publisher[3]}}"
+        placeholder="President"
+      />
+    </div>
+    <div class="form-group">
+      <label for="yearFounded">Year Founded</label>
+      <input
+        type="number"
+        maxlength="4"
+        class="form-control"
+        name="yearFounded"
+        value="{{publisher[4]}}"
+        id="yearFounded"
+        placeholder="Year Founded"
+      />
+    </div>
+    <div class="form-group">
+      <input type="submit" value="Update Publisher" />
+    </div>
+  </form>
+</div>
+{% endblock %}

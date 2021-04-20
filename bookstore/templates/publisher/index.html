@@ -1,0 +1,62 @@
+{% extends "layout.html" %} {% block content %}
+<div>
+  <h1>{{title}}</h1>
+
+  <div class="form-group">
+    <a class="button" href="{{ url_for('createPublisher')}}">Add Publisher</a>
+  </div>
+  {% if (publishers is defined) and publishers %}
+  <div style="overflow-x: auto">
+    <table id="publishers">
+      <tr>
+        <th>Publisher Name</th>
+        <th>City</th>
+        <th>Country</th>
+        <th>President</th>
+        <th>Year Founded</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      {% for publisher in publishers %}
+      <tr>
+        <td>{{ publisher[0] }}</td>
+        <td>{{ publisher[1] }}</td>
+        <td>{{ publisher[2] }}</td>
+        <td>{{ publisher[3] }}</td>
+        <td>{{ publisher[4] }}</td>
+        <td class="action-button">
+          <a href="{{ url_for('editPublisher',publisherName=publisher[0])}}"
+            ><img class="icon" src="./images/icons/edit.png" alt=""
+          /></a>
+        </td>
+        <td class="action-button">
+          <a
+            id="deleteButton"
+            data-url="{{ url_for('deletePublisher',publisherName=publisher[0])}}"
+            ><img class="icon" src="./images/icons/delete.png" alt=""
+          /></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% else %}
+  <p class="not-found">No Publishers found. Start by adding.</p>
+  {% endif %}
+  <div id="are-you-sure-modal" class="modal">
+    <div class="modal-body">
+      <div class="modal-header">
+        <p>Are you sure?</p>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-content">
+        <p>Do you really want to delete?</p>
+      </div>
+      <div class="modal-buttons">
+        <button class="button danger" id="cancel-button">Cancel</button>
+        <button class="button" id="accept-button">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
